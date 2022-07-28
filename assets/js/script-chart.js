@@ -1,6 +1,7 @@
 // button tanggal click
 let waktu;
 
+
 $('.filter-btn input').on('click', function () {
     waktu = $(this).attr('value');
     
@@ -215,6 +216,9 @@ $('.btn-click').on('click', function () {
 $('li').on('click', function () {
     let id = $(this).attr('value');
     let idChart = $('#' + idCard + ' canvas').attr('id');
+    if(waktu == undefined) {
+        waktu = '1hr';
+    }
     let data = {
         id_category :  id,
         wktu : waktu
@@ -227,7 +231,6 @@ $('li').on('click', function () {
         type: JSON,
         cache: false,
         success: function (data) {
-            console.log(data);
 
             // border color chart
             let borderColorChart = 'rgb(240, 68, 56)';

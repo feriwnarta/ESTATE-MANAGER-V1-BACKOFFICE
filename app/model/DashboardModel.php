@@ -127,6 +127,63 @@ class DashboardModel
         ];
     }
 
+    private function getPersentase($id_category, $wktu = '1hr') {
+        // satu hari
+        if($wktu == '1hr') {
+            $date_0 = date('Y-m-d H:i:s');
+            $date_1 = date('Y-m-d H:i:s', strtotime('-2 days'));
+            $query = "SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, ' ', time_post) > :date1 AND CONCAT(date_post, ' ', time_post) < :date2 AND id_category = :id_category";
+            $this->db->query_app($query);
+            $this->db->bind_data_app('date1', $date_1);
+            $this->db->bind_data_app('date2', $date_0);
+            $this->db->bind_data_app('id_category', $id_category);
+            $data1hr = $this->db->single_app()['total'];
+            // $hr_ini = 
+        } 
+        // satu minggu
+        else if($wktu == '7hr') {
+            //senen
+            $date_1 = date('Y-m-d H:i:s');
+            $date_2 = date('Y-m-d H:i:s', strtotime('-2 days'));
+
+            // selasa
+            $date_3 = date('Y-m-d H:i:s', strtotime('-1 days'));
+            $date_4 = date('Y-m-d H:i:s', strtotime('-3 days'));
+
+            // rabu
+            $date_5 = date('Y-m-d H:i:s', strtotime('-2 days'));
+            $date_4 = date('Y-m-d H:i:s', strtotime('-4 days'));
+            
+            // kamis 
+            $date_6 = date('Y-m-d H:i:s', strtotime('-3 days'));
+            $date_7 = date('Y-m-d H:i:s', strtotime('-5 days'));
+
+            // jumat 
+            $date_7 = date('Y-m-d H:i:s', strtotime('-4 days'));
+            $date_8 = date('Y-m-d H:i:s', strtotime('-6 days'));
+
+            // sabtu
+            $date_9 = date('Y-m-d H:i:s', strtotime('-5 days'));
+            $date_10 = date('Y-m-d H:i:s', strtotime('-7 days'));
+
+            // minggu
+            $date_10 = date('Y-m-d H:i:s', strtotime('-6 days'));
+            $date_11 = date('Y-m-d H:i:s', strtotime('-8 days'));
+        } 
+        // satu bulan berdasarkan 30 hr
+        else if($wktu == '30hr') {
+            // 1-15
+            $date_1hr = date('Y-m-d H:i:s');
+            $data_15hr = date('Y-m-d H:i:s', strtotime('-16 days'));
+
+            // 15 - 30
+            $data_15hr = date('Y-m-d H:i:s', strtotime('-15 days'));
+            $data_30hr = date('Y-m-d H:i:s', strtotime('-30 days'));
+        }
+
+        // $query = 'SELECT COUNT(id_report) AS persentase FROM tb_report WHERE '
+    }
+
     private function getDataChartByHour($id_category, $date1, $date2)
     {
         // query jam sekarang dikurangi -3 jam
