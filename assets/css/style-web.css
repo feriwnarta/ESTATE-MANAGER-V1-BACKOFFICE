@@ -1,0 +1,326 @@
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #FCFCFD;
+}
+
+.dashboard {
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.container-sidebar {
+    background-color: white !important;
+}
+
+.container-sidebar-shadow {
+    background-color: white !important;
+    box-shadow: 3px 0px 10px rgba(192, 192, 192, 0.2);
+    /* box-shadow: 1px 0px grey; */
+}
+
+.togglemobile {
+    display: none;
+}
+
+.title-bgm-text {
+    display: none;
+}
+
+.logo-bgm {
+    display: none;
+}
+
+.search-box {
+    width: 248px;
+    border-radius: 8px !important;
+    border: 0.5px solid #E0E0E0;
+    padding: 5px;
+}
+
+.sidebar-top {
+    margin-top: 32px;
+}
+
+.title {
+    margin-top: 32px;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #9E9E9E;
+}
+
+.btn-tanggal {
+    width: 142px;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px none;
+    background-color: white;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-group {
+    height: 40px;
+}
+
+.btn-group>label {
+    width: 90px;
+}
+
+.btn-filter {
+    width: 94px;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px none;
+    background-color: white;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* .container-chart p {
+    position: absolute;
+    left: 237px;
+    top: 157px;
+} */
+
+div.arrow-down-chart {
+    display: flex;
+    flex-flow: row;
+}
+
+div.arrow-down-chart object {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+div.arrow-down-chart p {
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+
+/* card line statistic */   
+.margin-card {
+    margin-right: 10px;
+}
+
+.card-line {
+    height: 200px;
+    width: 24.3%;
+    border: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.card-line .card-body {
+    padding: 24px 28px;
+}
+
+.card-line .card-title {
+    font-size: 10px;
+}
+
+.card-line .dropdown {
+    width: 240px;
+}
+
+.pembungkus-card {
+    margin-left: 10px;
+}
+
+.card-line .btn-dropdown-title {
+    background-color: white;
+    border: none;
+    color: black;
+    padding: 0px !important;
+    margin: 0px !important;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-dropdown-menu {
+    background-color: white;
+    border: none;
+    color: black;
+    font-size: 16px;
+}
+
+.text-kontraktor {
+    margin-top: 22px;
+}
+
+
+/* canvas chart  */
+canvas {
+    background-color: white;
+}
+
+.container-chart {
+    width: 96px;
+}
+
+.container-persentase p {
+    font-size: 14px;
+    font-weight: 500
+}
+
+.container-persentase h3 {
+    margin-top: 9px;
+    font-size: 33px;
+    font-weight: 600;
+}
+
+@media only screen and (max-height: 740px) {
+    div.arrow-down-chart object {
+        margin-left: 0px !important;
+        margin-top:  5% !important;
+    }
+    
+    div.arrow-down-chart p {
+        margin-left: 10% !important;
+        margin-top:  15% !important;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .pembungkus {
+        padding: 16px 16px !important;
+    }
+
+    .dashboard {
+        position: relative;
+    }
+
+    .search-box {
+        position: absolute;
+        top: 210px;
+        left: 0;
+        margin-left: 10px;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .nav-item {
+        opacity: 0;
+        display: none;
+    }
+
+    .container-sidebar-shadow {
+        background-color: white !important;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.12);
+    }
+
+    .dashboard {
+        padding: 0px;
+    }
+
+    #header .title {
+        margin: 0px;
+    }
+
+    .pembungkus {
+        width: 1200px;
+    }
+
+    /* header */
+    .title h1 {
+        font-size: 23px;
+    }
+
+    .togglemobile {
+        display: inline;
+    }
+
+    .logo-bgm {
+        display: inline;
+        position: absolute;
+        left: 50%;
+        top: 25%;
+    }
+
+    .title-bgm-text {
+        position: absolute;
+        height: 28px;
+        left: 16px;
+        top: 20px;
+
+        /* Headline/3 */
+
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 19px;
+        line-height: 28px;
+        /* identical to box height, or 147% */
+
+        display: flex;
+        align-items: center;
+        text-align: center;
+        letter-spacing: 0.0015em;
+
+        color: #485E88;
+    }
+
+    .btn-group {
+        height: 35px;
+        width: 100%;
+    }
+
+    .btn-group>label {
+        font-size: 14px;
+
+    }
+
+    .btn-group .btn-width {
+        width: 100px;
+    }
+
+    .filter-group-btn {
+        margin-top: 16px;
+    }
+
+    .filter-tgl {
+        position: relative;
+    }
+
+    .card-line {
+        margin-bottom: 15px;
+        margin-left: 7px;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.12);
+        border-radius: 8px;
+    }
+
+    .pembungkus-card {
+        margin-top: 70px;
+        margin-left: 0px;
+        padding-right: 30px;
+    }
+
+    .btn-tgl {
+        font-size: 14px;
+    }
+
+    div.arrow-down-chart object {
+        margin-left: 0px;
+        margin-bottom: 1%;
+    }
+    
+    div.arrow-down-chart p {
+        margin-left: 10%;
+        margin-top: 9%;
+    }
+
+    .card-line {
+        height: 200px;
+        width: 100%;
+    }
+
+    .btn-group button.btn-dropdown-title {
+        font-size: 12px;
+    }
+
+}
