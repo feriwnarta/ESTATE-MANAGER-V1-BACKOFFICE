@@ -15,7 +15,8 @@ class Dashboard extends Controller {
     public function updateChart() {
         if(isset($_POST['id_category'])) {
             $id_category = $_POST['id_category'];
-            echo json_encode($this->model('dashboardmodel')->getDataChartByCategory($id_category));
+            $wktu = $_POST['wktu'];
+            echo json_encode($this->model('dashboardmodel')->getDataChartByCategory($id_category, $wktu));
         }
     }
 }

@@ -25,16 +25,16 @@
             <div class="row">
                 <div class="col-lg-6 filter-tgl text-left filter-btn">
                     <div class="btn-group text-center" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                        <input value="1hr" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
                         <label class="btn btn-outline-secondary" for="btnradio1">1 hari</label>
 
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                        <input value="7hr" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
                         <label class="btn btn-outline-secondary" for="btnradio2">7 hari</label>
 
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                        <input value="30hr" type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
                         <label class="btn btn-outline-secondary" for="btnradio3">30 hari</label>
 
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+                        <input value="12bln" type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
                         <label class="btn btn-width btn-outline-secondary" for="btnradio4">12 bulan</label>
                     </div>
                 </div>

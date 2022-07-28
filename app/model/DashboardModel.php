@@ -45,14 +45,35 @@ class DashboardModel
     }
 
     // mengambil data chart berdasarkan category id
-    public function getDataChartByCategory($id_category = 0)
+    public function getDataChartByCategory($id_category = 0, $wktu = '1hr')
     {
         date_default_timezone_set('asia/jakarta');
-        $date_4 = date('Y-m-d H:i:s', strtotime('-6 hour'));
-        $date_3 = date('Y-m-d H:i:s', strtotime('-6 hour'));
-        $date_2 = date('Y-m-d H:i:s', strtotime('-6 hour'));
-        $date_1 = date('Y-m-d H:i:s', strtotime('-6 hour'));
-        $date_0 = date('Y-m-d H:i:s');
+
+        if ($wktu == '1hr') {
+            $date_4 = date('Y-m-d H:i:s', strtotime('-24 hour'));
+            $date_3 = date('Y-m-d H:i:s', strtotime('-18 hour'));
+            $date_2 = date('Y-m-d H:i:s', strtotime('-12 hour'));
+            $date_1 = date('Y-m-d H:i:s', strtotime('-6 hour'));
+            $date_0 = date('Y-m-d H:i:s');
+        } else if ($wktu == '7hr') {
+            $date_4 = date('Y-m-d H:i:s', strtotime('-36 hour'));
+            $date_3 = date('Y-m-d H:i:s', strtotime('-36 hour'));
+            $date_2 = date('Y-m-d H:i:s', strtotime('-108 hour'));
+            $date_1 = date('Y-m-d H:i:s', strtotime('-144 hour'));
+            $date_0 = date('Y-m-d H:i:s');
+        } else if ($wktu == '30hr') {
+            $date_4 = date('Y-m-d H:i:s', strtotime('-180 hour'));
+            $date_3 = date('Y-m-d H:i:s', strtotime('-360 hour'));
+            $date_2 = date('Y-m-d H:i:s', strtotime('-540 hour'));
+            $date_1 = date('Y-m-d H:i:s', strtotime('-720 hour'));
+            $date_0 = date('Y-m-d H:i:s');
+        } else if ($wktu == '12bln') {
+            $date_4 = date('Y-m-d H:i:s', strtotime('-8760 hour'));
+            $date_3 = date('Y-m-d H:i:s', strtotime('-6570 hour'));
+            $date_2 = date('Y-m-d H:i:s', strtotime('-4380 hour'));
+            $date_1 = date('Y-m-d H:i:s', strtotime('-2190 hour'));
+            $date_0 = date('Y-m-d H:i:s');
+        }
 
         $jam_skrg = $this->getDataChartByHour($id_category, $date_1, $date_0);
 
@@ -101,18 +122,19 @@ class DashboardModel
             'jam_sekarang_3' => $jam_skrg_3['total'],
             'jam_sekarang_4' => $jam_skrg_4['total'],
             'total' => $total,
-            'nama_kategori'  =>$nama_category['category'],
-            'nama_kontraktor'=>$nama_kontraktor['name_contractor'],
+            'nama_kategori'  => $nama_category['category'],
+            'nama_kontraktor' => $nama_kontraktor['name_contractor'],
         ];
     }
 
-    private function getDataChartByHour($id_category, $date1, $date2) {
+    private function getDataChartByHour($id_category, $date1, $date2)
+    {
         // query jam sekarang dikurangi -3 jam
         $query3 = "SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, ' ', time_post) > :date1 AND CONCAT(date_post, ' ', time_post) < :date2 AND id_category = :id_category";
         $this->db->query_app($query3);
         $this->db->bind_data_app('date1', $date1);
         $this->db->bind_data_app('date2', $date2);
         $this->db->bind_data_app('id_category', $id_category);
-       return $this->db->single_app();
+        return $this->db->single_app();
     }
 }
