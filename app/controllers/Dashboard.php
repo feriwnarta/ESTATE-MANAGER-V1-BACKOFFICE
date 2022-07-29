@@ -4,7 +4,6 @@ class Dashboard extends Controller {
     public function index() {
         $data['judul'] = 'Dashboard ';
         $card['title'] = $this->model('dashboardmodel')->getStatisticTitle();
-        $this->model('dashboardmodel')->getDataChartByCategory(2);
         $card['dropdown'] = $this->model('dashboardmodel')
         ->getStatisticDropdown($card['title']);
         $this->view('templates/header', $data);

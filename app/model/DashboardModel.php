@@ -76,30 +76,8 @@ class DashboardModel
         }
 
         $jam_skrg = $this->getDataChartByHour($id_category, $date_1, $date_0);
-
-        // query jam sekarang dikurangi -2 jam
-        // $query2 = "SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, ' ', time_post) > :date2 AND CONCAT(date_post, ' ', time_post) < :date1 AND id_category = :id_category";
-        // $this->db->query_app($query2);
-        // $this->db->bind_data_app('date2', $date_2);
-        // $this->db->bind_data_app('date1', $date_1);
-        // $this->db->bind_data_app('id_category', $id_category);
         $jam_skrg_2 = $this->getDataChartByHour($id_category, $date_2, $date_1);
-
-        // query jam sekarang dikurangi -3 jam
-        // $query3 = "SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, ' ', time_post) > :date3 AND CONCAT(date_post, ' ', time_post) < :date2 AND id_category = :id_category";
-        // $this->db->query_app($query3);
-        // $this->db->bind_data_app('date3', $date_3);
-        // $this->db->bind_data_app('date2', $date_2);
-        // $this->db->bind_data_app('id_category', $id_category);
         $jam_skrg_3 = $this->getDataChartByHour($id_category, $date_3, $date_2);
-
-
-        // query jam sekarang dikurangi -4 jam
-        // $query4 = "SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, ' ', time_post) > :date4 AND CONCAT(date_post, ' ', time_post) < :date3 AND id_category = :id_category";
-        // $this->db->query_app($query4);
-        // $this->db->bind_data_app('date4', $date_4);
-        // $this->db->bind_data_app('date3', $date_3);
-        // $this->db->bind_data_app('id_category', $id_category);
         $jam_skrg_4 = $this->getDataChartByHour($id_category, $date_4, $date_3);
 
         $total = $jam_skrg['total'] + $jam_skrg_2['total'] + $jam_skrg_3['total'] + $jam_skrg_4['total'];
@@ -116,6 +94,9 @@ class DashboardModel
         $this->db->bind_data_app('id_category', $id_category);
         $nama_kontraktor = $this->db->single_app();
 
+        // panggil method hitung persentase hri target dibandingkan dgn hari ini
+        $persentaseTarget = $this->getPersentase($id_category, $wktu);
+
         return $data_balik = [
             'jam_sekarang_1' => $jam_skrg['total'],
             'jam_sekarang_2' => $jam_skrg_2['total'],
@@ -124,64 +105,95 @@ class DashboardModel
             'total' => $total,
             'nama_kategori'  => $nama_category['category'],
             'nama_kontraktor' => $nama_kontraktor['name_contractor'],
+            'persentase' => $persentaseTarget
         ];
     }
 
-    private function getPersentase($id_category, $wktu = '1hr') {
-        // satu hari
-        if($wktu == '1hr') {
-            $date_0 = date('Y-m-d H:i:s');
-            $date_1 = date('Y-m-d H:i:s', strtotime('-2 days'));
-            $query = "SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, ' ', time_post) > :date1 AND CONCAT(date_post, ' ', time_post) < :date2 AND id_category = :id_category";
-            $this->db->query_app($query);
-            $this->db->bind_data_app('date1', $date_1);
-            $this->db->bind_data_app('date2', $date_0);
-            $this->db->bind_data_app('id_category', $id_category);
-            $data1hr = $this->db->single_app()['total'];
-            // $hr_ini = 
-        } 
-        // satu minggu
-        else if($wktu == '7hr') {
-            //senen
-            $date_1 = date('Y-m-d H:i:s');
-            $date_2 = date('Y-m-d H:i:s', strtotime('-2 days'));
-
-            // selasa
-            $date_3 = date('Y-m-d H:i:s', strtotime('-1 days'));
-            $date_4 = date('Y-m-d H:i:s', strtotime('-3 days'));
-
-            // rabu
-            $date_5 = date('Y-m-d H:i:s', strtotime('-2 days'));
-            $date_4 = date('Y-m-d H:i:s', strtotime('-4 days'));
-            
-            // kamis 
-            $date_6 = date('Y-m-d H:i:s', strtotime('-3 days'));
-            $date_7 = date('Y-m-d H:i:s', strtotime('-5 days'));
-
-            // jumat 
-            $date_7 = date('Y-m-d H:i:s', strtotime('-4 days'));
-            $date_8 = date('Y-m-d H:i:s', strtotime('-6 days'));
-
-            // sabtu
-            $date_9 = date('Y-m-d H:i:s', strtotime('-5 days'));
-            $date_10 = date('Y-m-d H:i:s', strtotime('-7 days'));
-
-            // minggu
-            $date_10 = date('Y-m-d H:i:s', strtotime('-6 days'));
-            $date_11 = date('Y-m-d H:i:s', strtotime('-8 days'));
-        } 
-        // satu bulan berdasarkan 30 hr
-        else if($wktu == '30hr') {
-            // 1-15
-            $date_1hr = date('Y-m-d H:i:s');
-            $data_15hr = date('Y-m-d H:i:s', strtotime('-16 days'));
-
-            // 15 - 30
-            $data_15hr = date('Y-m-d H:i:s', strtotime('-15 days'));
-            $data_30hr = date('Y-m-d H:i:s', strtotime('-30 days'));
+    private function getPersentase($id_category, $wktu = '1hr')
+    {
+        // date_default_timezone_set('asia/jakarta');
+        // satu hari bulan ini
+        if ($wktu == '1hr') {
+            $hr_awal = date('Y-m-d H:i:s');
+            $hr_akhir = date('Y-m-d H:i:s', strtotime('-1 days'));
+            $hri_target_pembanding = date('Y-m-d H:i:s', strtotime('-2 days'));
+            $hr_pembanding = date('Y-m-d H:i:s', strtotime('-1 days -1 minutes'));
+        }
+        // satu minggu bulan ini
+        else if ($wktu == '7hr') {
+            $hr_awal = date('Y-m-d H:i:s');
+            $hr_akhir = date('Y-m-d H:i:s', strtotime('-7 days'));
+            $hri_target_pembanding = date('Y-m-d H:i:s', strtotime('-15 days'));
+            $hr_pembanding = date('Y-m-d H:i:s', strtotime('-7 days -1 minutes'));
+        }
+        // satu bulan bulan ini
+        else if ($wktu == '30hr') {
+            $hr_awal = date('Y-m-d H:i:s');
+            $hr_akhir = date('Y-m-d H:i:s', strtotime('-30 days'));
+            $hri_target_pembanding = date('Y-m-d H:i:s', strtotime('-32 days'));
+            $hr_pembanding = date('Y-m-d H:i:s', strtotime('-30 days -1 minutes'));
+        } else {
+            $hr_awal = date('Y-m-d H:i:s');
+            $hr_akhir = date('Y-m-d H:i:s', strtotime('-365 days'));
+            $hri_target_pembanding = date('Y-m-d H:i:s', strtotime('-366 days'));
+            $hr_pembanding = date('Y-m-d H:i:s', strtotime('-365 days -1 minutes'));
         }
 
-        // $query = 'SELECT COUNT(id_report) AS persentase FROM tb_report WHERE '
+        // query awal
+        $queryHrIni = "SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, ' ', time_post) > :date1 AND CONCAT(date_post, ' ', time_post) < :date2 AND id_category = :id_category";
+        $this->db->query_app($queryHrIni);
+        $this->db->bind_data_app('date1', $hr_akhir);
+        $this->db->bind_data_app('date2', $hr_awal);
+        $this->db->bind_data_app('id_category', $id_category);
+        $resultHrIni =  $this->db->single_app()['total'];
+
+
+        // query pembanding
+        $queryTarget = "SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, ' ', time_post) > :date1 AND CONCAT(date_post, ' ', time_post) < :date2 AND id_category = :id_category";
+        $this->db->query_app($queryTarget);
+        $this->db->bind_data_app('date1', $hri_target_pembanding);
+        $this->db->bind_data_app('date2', $hr_pembanding);
+        $this->db->bind_data_app('id_category', $id_category);
+        $resultTarget =  $this->db->single_app()['total'];
+
+        // hitung persentase laporan hr kemarin, 7hr yg lalu, 30 hr yang lalu, sampai 1 tahun yg lalu
+        if ($wktu == '1hr') {
+            $resultPersentaseTarget = 100 - $resultTarget;
+            $resultPersentaseHrIni = 100 - $resultHrIni;
+            $resultPersentaseHrIni -= $resultPersentaseTarget;
+        } else if ($wktu == '7hr') {
+            $resultPersentaseTarget = 700 - $resultTarget;
+            $resultPersentaseTarget /=  7;
+            $resultPersentaseTarget = round($resultPersentaseTarget);
+
+            $resultPersentaseHrIni = 700 - $resultHrIni;
+            $resultPersentaseHrIni /= 7;
+            $resultPersentaseHrIni = round($resultPersentaseHrIni);
+
+            $resultPersentaseHrIni -= $resultPersentaseTarget;
+        } else if ($wktu == '30hr') {
+            $resultPersentaseTarget = 3000 - $resultTarget;
+            $resultPersentaseTarget /=  30;
+            $resultPersentaseTarget = round($resultPersentaseTarget);
+
+            $resultPersentaseHrIni = 3000 - $resultHrIni;
+            $resultPersentaseHrIni /= 30;
+            $resultPersentaseHrIni = round($resultPersentaseHrIni);
+
+            $resultPersentaseHrIni -= $resultPersentaseTarget;
+            // var_dump($resultPersentaseHrIni);
+        } else {
+            $resultPersentaseTarget = 36500 - $resultTarget;
+            $resultPersentaseTarget /=  365;
+            $resultPersentaseTarget = round($resultPersentaseTarget);
+
+            $resultPersentaseHrIni = 36500 - $resultHrIni;
+            $resultPersentaseHrIni /= 365;
+            $resultPersentaseHrIni = round($resultPersentaseHrIni);
+
+            $resultPersentaseHrIni -= $resultPersentaseTarget;
+        }
+        return $resultPersentaseHrIni;
     }
 
     private function getDataChartByHour($id_category, $date1, $date2)
