@@ -56,16 +56,16 @@ class DashboardModel
             $date_1 = date('Y-m-d H:i:s', strtotime('-6 hour'));
             $date_0 = date('Y-m-d H:i:s');
         } else if ($wktu == '7hr') {
-            $date_4 = date('Y-m-d H:i:s', strtotime('-36 hour'));
-            $date_3 = date('Y-m-d H:i:s', strtotime('-36 hour'));
-            $date_2 = date('Y-m-d H:i:s', strtotime('-108 hour'));
-            $date_1 = date('Y-m-d H:i:s', strtotime('-144 hour'));
+            $date_4 = date('Y-m-d H:i:s', strtotime('-144 hour'));
+            $date_3 = date('Y-m-d H:i:s', strtotime('-108 hour'));
+            $date_2 = date('Y-m-d H:i:s', strtotime('-72 hour'));
+            $date_1 = date('Y-m-d H:i:s', strtotime('-36 hour'));
             $date_0 = date('Y-m-d H:i:s');
         } else if ($wktu == '30hr') {
-            $date_4 = date('Y-m-d H:i:s', strtotime('-180 hour'));
-            $date_3 = date('Y-m-d H:i:s', strtotime('-360 hour'));
-            $date_2 = date('Y-m-d H:i:s', strtotime('-540 hour'));
-            $date_1 = date('Y-m-d H:i:s', strtotime('-720 hour'));
+            $date_4 = date('Y-m-d H:i:s', strtotime('-720 hour'));
+            $date_3 = date('Y-m-d H:i:s', strtotime('-540 hour'));
+            $date_2 = date('Y-m-d H:i:s', strtotime('-360 hour'));
+            $date_1 = date('Y-m-d H:i:s', strtotime('-180 hour'));
             $date_0 = date('Y-m-d H:i:s');
         } else if ($wktu == '12bln') {
             $date_4 = date('Y-m-d H:i:s', strtotime('-8760 hour'));
