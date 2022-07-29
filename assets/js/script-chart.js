@@ -280,6 +280,7 @@ $('.btn-click').on('click', function () {
 // ubah data saat dropdown di click
 $('li').on('click', function () {
     let id = $(this).attr('value');
+
     let idChart = $('#' + idCard + ' canvas').attr('id');
     if (waktu == undefined) {
         waktu = '1hr';
@@ -310,6 +311,10 @@ $('li').on('click', function () {
             // ubah nama kategori
             console.log('idcarddddd' + idCard);
             $('.btn-group button#' + idCard).html(data.nama_kategori);
+
+            // ubah value button dropdown ini berdasarkan id dropdown baru
+            $('.btn-group button#' + idCard).val(id);
+
 
             // ubah nama kontraktor
             $('#' + idCard + ' div' + '#card' + idCard + ' p').html(data.nama_kontraktor);
