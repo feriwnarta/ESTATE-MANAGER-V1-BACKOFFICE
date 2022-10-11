@@ -127,21 +127,31 @@
 
     <!-- Section pie chart -->
     <section id="piechart">
-        <div class="card-line margin-card col-lg-3">
-            <div class=" card-body">
-                <div class="card-title">Total Laporan</div>
-                <div class="row">
-                    <div class="col-lg-6 col-12">
-                        <canvas id="pie" height="82px"></canvas>
-                    </div>
-                    <div class="col-lg-6 col-12">
-                        <div class="card-pie-body">
-                            test
+        <div class="container-fluid pembungkus-card">
+            <div class="row">
+
+                <div id="card" class="card card-line col-lg-3 col-12">
+                    <div class="card-body">
+                        <div class="card-title-pie">Total Laporan</div>
+
+                        <div class="row card-body-pie">
+                            <div class="col-6 container-pie">
+                                <canvas id="pie"></canvas>
+                            </div>
+                            <div class="col-6 container-content-pie my-auto">
+                                <div class="pie-body">12 Landscape</div>
+                                <div class="pie-body">asdasd</div>
+                                <div class="pie-body">asdasd</div>
+                                <div class="pie-body">asdasd</div>
+                                <div class="pie-body">asdasd</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+
+
+            </div>
         </div>
     </section>
     <!-- End Section pie chart -->

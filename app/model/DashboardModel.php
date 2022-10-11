@@ -7,6 +7,7 @@ class DashboardModel
     public function __construct()
     {
         $this->db = new Database;
+        date_default_timezone_set('asia/jakarta');
     }
 
     public function getStatisticTitle()
@@ -205,5 +206,72 @@ class DashboardModel
         $this->db->bind_data_app('date2', $date2);
         $this->db->bind_data_app('id_category', $id_category);
         return $this->db->single_app();
+    }
+
+    public function getDataChartPie($wktu = '1hr')
+    {
+        // query total laporan berdasarkan kategori
+        $query_total_laporan = 'SELECT * FROM tb_master_category';
+        $this->db->query_app($query_total_laporan);
+        $result_total_laporan = $this->db->fetch_all_app();
+        $data = array();
+        foreach ($result_total_laporan as $key => $value1) {
+            // select category berdasrkan master category
+            $query = 'SELECT id_category FROM tb_category WHERE id_master_category =:id';
+            $this->db->query_app($query);
+            $this->db->bind_data_app('id', $value1['id_master_category']);
+            $rs = $this->db->fetch_all_app();
+            $total_keseluruhan = 0;
+            // looping seluruh kategori berdasarkan master category
+            foreach ($rs as $key => $value) {
+                $duration = $this->getDataPieByDuration($wktu);
+                // select report berdasrkan category dan waktu yang ditentuka
+                $query = 'SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, time_post) > :hr_akhir AND CONCAT(date_post, time_post) < :hr_awal AND id_category = :id_category';
+                $this->db->query_app($query);
+                $this->db->bind_data_app('id_category', $value['id_category']);
+                $this->db->bind_data_app('hr_awal', $duration['hr_awal']);
+                $this->db->bind_data_app('hr_akhir', $duration['hr_akhir']);
+                // $this->db->bind_data_app('id_category', $duration[$value['id_category']]);
+                $rss = $this->db->fetch_all_app();
+                // var_dump($rss[0]['total']);
+                $total = intval($rss[0]['total']);
+                $total_keseluruhan += $total;
+                // break;
+            }
+            // data balikan
+            $data[] = array(
+                'unit' => $value1['unit'],
+                'total' => $total_keseluruhan
+            );
+        }
+
+        // 
+        var_dump($data);
+    }
+
+    private function getDataPieByDuration($wktu = '1hr')
+    {
+        // satu hari bulan ini
+        if ($wktu == '1hr') {
+            $hr_awal = date('Y-m-d H:i:s');
+            $hr_akhir = date('Y-m-d H:i:s', strtotime('-1 days'));
+        }
+        // satu minggu bulan ini
+        else if ($wktu == '7hr') {
+            $hr_awal = date('Y-m-d H:i:s');
+            $hr_akhir = date('Y-m-d H:i:s', strtotime('-7 days'));
+        }
+        // satu bulan bulan ini
+        else if ($wktu == '30hr') {
+            $hr_awal = date('Y-m-d H:i:s');
+            $hr_akhir = date('Y-m-d H:i:s', strtotime('-30 days'));
+        } else {
+            $hr_awal = date('Y-m-d H:i:s');
+            $hr_akhir = date('Y-m-d H:i:s', strtotime('-365 days'));
+        }
+        return array(
+            'hr_awal' => $hr_awal,
+            'hr_akhir' => $hr_akhir
+        );
     }
 }

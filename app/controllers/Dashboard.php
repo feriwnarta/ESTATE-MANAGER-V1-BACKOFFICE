@@ -3,9 +3,11 @@
 class Dashboard extends Controller {
     public function index() {
         $data['judul'] = 'Dashboard ';
-        $card['title'] = $this->model('dashboardmodel')->getStatisticTitle();
-        $card['dropdown'] = $this->model('dashboardmodel')
+        $obj_dashboard = $this->model('dashboardmodel');
+        $card['title'] = $obj_dashboard->getStatisticTitle();
+        $card['dropdown'] = $obj_dashboard
         ->getStatisticDropdown($card['title']);
+        $obj_dashboard->getDataChartPie();
         $this->view('templates/header', $data);
         $this->view('dashboard/index', $card);
         $this->view('templates/footer');

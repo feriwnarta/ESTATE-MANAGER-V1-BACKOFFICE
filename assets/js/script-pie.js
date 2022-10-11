@@ -2,8 +2,6 @@
 $(document).ready(function () {
     let ctx = document.getElementById('pie').getContext('2d');
     var chartExist = Chart.getChart('pie');
-    let fillColorChart = 'rgba(35, 240, 9, 0.1)';
-    let borderColorChart = 'rgb(240, 68, 56)';
     if (chartExist != undefined) chartExist.destroy();
     let myChart = new Chart(ctx, {
         type: 'doughnut',

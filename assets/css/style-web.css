@@ -101,14 +101,14 @@ div.arrow-down-chart p {
 }
 
 
-/* card line statistic */   
+/* card line statistic */
 .margin-card {
     margin-right: 10px;
 }
 
 .card-line {
     height: 200px;
-    width: 24.3%;
+    /* width: 24.3%; */
     border: none;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
 }
@@ -171,15 +171,51 @@ canvas {
     font-weight: 600;
 }
 
+/* section pie chart */
+.container-pie {
+    width: 120px;
+    height: auto;
+    margin-right: 16px;
+}
+
+.card-title-pie {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.card-body-pie {
+    margin-top: 20px;
+}
+
+.pie-body {
+    margin-left: 16px;
+}
+
+.container-content-pie {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12px;
+    /* identical to box height, or 120% */
+
+    letter-spacing: 0.015em;
+
+
+    color: #757575;
+}
+
+/* end section pie chart */
+
 @media only screen and (max-height: 740px) {
     div.arrow-down-chart object {
         margin-left: 0px !important;
-        margin-top:  5% !important;
+        margin-top: 5% !important;
     }
-    
+
     div.arrow-down-chart p {
         margin-left: 10% !important;
-        margin-top:  15% !important;
+        margin-top: 15% !important;
     }
 }
 
@@ -308,7 +344,7 @@ canvas {
         margin-left: 0px;
         margin-bottom: 1%;
     }
-    
+
     div.arrow-down-chart p {
         margin-left: 10%;
         margin-top: 9%;
