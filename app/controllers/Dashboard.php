@@ -18,4 +18,5 @@ class Dashboard extends Controller {
             echo json_encode($this->model('dashboardmodel')->getDataChartByCategory($id_category, $wktu));
         }
     }
+    
 }

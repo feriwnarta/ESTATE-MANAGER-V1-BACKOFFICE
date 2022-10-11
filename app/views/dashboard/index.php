@@ -10,7 +10,7 @@
                 <div class="col-sm search-bar d-flex justify-content-end">
                     <div>
                         <form role="search">
-                            <input type="text" placeholder="&#xF002; Search" style="font-family:inter, FontAwesome;" class="search-box ps-3" />
+                            <input type="text" placeholder="&#xF002; Search" style="font-family: 'Helvetica', FontAwesome, sans-serif;" class="search-box ps-3" />
                         </form>
                     </div>
                 </div>
@@ -59,12 +59,12 @@
     </section>
 
 
-    <!-- card section -->
+    <!-- card chart section -->
     <section id="card-statistic-line" class="mt-4">
         <div class="container-fluid pembungkus-card">
             <div class="row">
                 <?php foreach ($data['title'] as $key2 => $value_master) { ?>
-                    <div id="card<?= $value_master['id_master_category']; ?>" class="card card-line margin-card col-lg-3">
+                    <div id="card<?= $value_master['id_master_category']; ?>" class="card card-line col-lg-3 col-12">
                         <div class="card-body">
                             <h5 class="card-title">Penilaian <?= $value_master['unit']; ?> </h5>
                             <h6 class="card-subtitle mb-2 text-muted">
@@ -123,4 +123,25 @@
             </div>
         </div>
     </section>
-</div>
+    <!-- End Section Card Chart -->
+
+    <!-- Section pie chart -->
+    <section id="piechart">
+        <div class="card-line margin-card col-lg-3">
+            <div class=" card-body">
+                <div class="card-title">Total Laporan</div>
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+                        <canvas id="pie" height="82px"></canvas>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="card-pie-body">
+                            test
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- End Section pie chart -->
