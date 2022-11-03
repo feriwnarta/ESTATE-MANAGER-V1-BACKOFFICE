@@ -172,6 +172,10 @@ canvas {
 }
 
 /* section pie chart */
+#piechart {
+    margin-top: 35px;
+}
+
 .container-pie {
     width: 120px;
     height: auto;
@@ -188,7 +192,11 @@ canvas {
 }
 
 .pie-body {
-    margin-left: 16px;
+    /* margin-left: 16px; */
+}
+
+.pie-text {
+    font-size: 12px;
 }
 
 .container-content-pie {

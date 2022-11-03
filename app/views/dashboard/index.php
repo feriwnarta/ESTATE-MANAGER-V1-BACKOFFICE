@@ -135,22 +135,19 @@
                         <div class="card-title-pie">Total Laporan</div>
 
                         <div class="row card-body-pie">
-                            <div class="col-6 container-pie">
+                            <div class="col-2 container-pie">
                                 <canvas id="pie"></canvas>
                             </div>
-                            <div class="col-6 container-content-pie my-auto">
-                                <div class="pie-body">12 Landscape</div>
-                                <div class="pie-body">asdasd</div>
-                                <div class="pie-body">asdasd</div>
-                                <div class="pie-body">asdasd</div>
-                                <div class="pie-body">asdasd</div>
+                            <div class="col-7 container-content-pie my-auto">
+                                <?php foreach ($data['pie_total_laporan'] as $value) { ?>
+                                    <div class="pie-body">
+                                        <span class="pie-text"><?= $value['total'];?> <?= $value['unit'];?></span>    
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     </section>
