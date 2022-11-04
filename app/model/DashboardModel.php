@@ -217,11 +217,12 @@ class DashboardModel
         $data = array();
         foreach ($result_total_laporan as $key => $value1) {
             // select category berdasrkan master category
-            $query = 'SELECT id_category,category FROM tb_category WHERE id_master_category =:id';
+            $query = 'SELECT id_category, category FROM tb_category WHERE id_master_category =:id';
             $this->db->query_app($query);
             $this->db->bind_data_app('id', $value1['id_master_category']);
             $rs = $this->db->fetch_all_app();
             $total_keseluruhan = 0;
+            $total_laporan_selesai_keseluruhan = 0;
             // looping seluruh kategori berdasarkan master category
             foreach ($rs as $key => $value) {
                 $duration = $this->getDataPieByDuration($wktu);
@@ -236,22 +237,46 @@ class DashboardModel
                 $this->db->bind_data_app('hr_akhir', $duration['hr_akhir']);
                 // $this->db->bind_data_app('id_category', $duration[$value['id_category']]);
                 $rss = $this->db->fetch_all_app();
-                var_dump($rss);
+                // var_dump($rss);
+
                 $total = intval($rss[0]['total']);
                 $total_keseluruhan += $total;
 
                 // * QUERY UNTUK CARD TOTAL LAPORAN SELESAI
-                
-                $query = 'SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, time_post) > :hr_akhir AND CONCAT(date_post, time_post) < :hr_awal AND id_category = :id_category AND ';
+                $sts = 'status = "finish"';
+                $query = 'SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, " ", time_post) > :hr_akhir AND CONCAT(date_post, " ", time_post) < :hr_awal AND id_category = :id_category AND ' . $sts;
+                $this->db->query_app($query);
+                $this->db->bind_data_app('id_category', $value['id_category']);
+                $this->db->bind_data_app('hr_awal', $duration['hr_awal']);
+                $this->db->bind_data_app('hr_akhir', $duration['hr_akhir']);
 
+                $result_laporan_selesai = $this->db->fetch_all_app();
+                $total_laporan_selesai = intval($result_laporan_selesai[0]['total']);
+                $total_laporan_selesai_keseluruhan += $total_laporan_selesai;
+
+                // * QUERY UNTUK CARD LAPORAN SEDANG DIKERJAKAN
+                $sts = 'status = "process"';
+                $query = 'SELECT COUNT(id_report) AS total FROM tb_report WHERE CONCAT(date_post, " ", time_post) > :hr_akhir AND CONCAT(date_post, " ", time_post) < :hr_awal AND id_category = :id_category AND ' . $sts;
+                $this->db->query_app($query);
+                $this->db->bind_data_app('id_category', $value['id_category']);
+                $this->db->bind_data_app('hr_awal', $duration['hr_awal']);
+                $this->db->bind_data_app('hr_akhir', $duration['hr_akhir']);
             }
 
+
             // data balikan
-            $data[] = array(
+            $data['total_laporan'][] = array(
                 'unit' => $value1['unit'],
                 'total' => $total_keseluruhan
             );
+
+            $data['total_laporan_selesai'][] = array(
+                'unit' => $value1['unit'],
+                'total' => $total_laporan_selesai_keseluruhan
+            );
         }
+
+        var_dump($data);
 
 
         return $data;
